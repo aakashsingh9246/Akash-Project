@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script src="jquery-ui/jquery-ui.js"></script>
+	<link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+
+
+	<style type="text/css">
+	
+	#containment-wrapper { 
+		width: 95%; 
+		height:150px; 
+		border:2px solid #ccc; 
+		padding: 10px; 
+	}
+	
+	.draggable { 
+		width: 90px; 
+		height: 90px; 
+		padding: 0.5em; 
+		float: left; 
+		margin: 0 10px 10px 0; 
+	}
+
+	 #resizable { width: 150px; height: 150px; padding: 0.5em; margin-top: 10px; }
+     #resizable h3 { text-align: center; margin: 0; }
+
+     #also { width: 150px; height: 150px; padding: 0.5em; margin-top: 10px; }
+     #also h3 { text-align: center; margin: 0; }
+
+
+     #littleSquare{
+     	width: 100px;
+     	height: 100px;
+     	border: 1px solid gray;
+     	margin: 5px;
+
+
+
+     }
+
+      #bigSquare{
+     	width: 300px;
+     	height: 300px;
+     	border: 1px solid gray;
+     	margin: 5px;
+     	
+     	
+     }
+
+     .clear{
+     	clear: both;
+     }
+	</style>
+
+</head>
+<body>
+
+<div id="containment-wrapper">
+	<div id="draggable" class="draggable ui-widget-content">
+		 <p>Drag me within box</p>
+	</div>
+
+
+	<div class="draggable ui-widget-content" >
+		<p id="draggable2">Drag me in child box</p>
+	</div>
+ 
+</div>
+	
+
+	<div id="resizable" class="ui-widget-content" >
+		<h3 class="ui-widget-header"> Resizable </h3>
+	</div>
+
+	<div id="also" class="ui-widget-content" >
+		<h3 class="ui-widget-header"> Also </h3>
+	</div>
+
+<div class = "clear"></div>
+	<div id = "littleSquare"></div>
+	<div id = "bigSquare"></div>
+
+<div class="clear"></div>
+<div id="accordion">
+  <h3>Section 1</h3>
+  <div>
+    <p>
+    Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+    ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+    amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+    odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+    </p>
+  </div>
+  <h3>Section 2</h3>
+  <div>
+    <p>
+    Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+    purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+    velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+    suscipit faucibus urna.
+    </p>
+  </div>
+  <h3>Section 3</h3>
+  <div>
+    <p>
+    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+    </p>
+    <ul>
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+  </div>
+  <h3>Section 4</h3>
+  <div>
+    <p>
+    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+    mauris vel est.
+    </p>
+    <p>
+    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+    inceptos himenaeos.
+    </p>
+  </div>
+</div>	
+
+
+<div class = "clear"></div>
+
+
+
+<ul id="sortable">
+	<li >1</li>
+	<li >2</li>
+	<li >3</li>
+</ul>
+
+<script type="text/javascript">
+
+	
+	
+    $( "#draggable" ).draggable({ containment: "parent", scroll: true });
+  	$("#draggable2").draggable({containment: "parent"});
+	$("#resizable").resizable();
+	$("#also").resizable({
+		alsoResize : "#resizable",
+		resize : function(event , ui){
+			
+				if($("#also").width() > 300)
+				alert("Large Enough!");
+
+		}
+	});
+
+	$("#littleSquare").draggable();
+	$("#bigSquare").droppable({
+		drop: function(event , ui){
+			$(this).css("backgroundColor","red");
+		},
+		out: function( event, ui ) {
+			$(this).css("backgroundColor","white");
+		}
+	});
+
+	$("#accordion").accordion({
+		collapsible : true
+	});
+
+
+ 	$("#sortable").sortable();
+
+
+
+</script>
+</body>
+</html>

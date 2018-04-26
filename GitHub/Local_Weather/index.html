@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Local Weather</title>
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+  <style type="text/css">
+    .jumbotron{
+      text-align: center;
+      width: 100%;
+    }
+
+    #info{
+      padding-bottom: 20px;
+    }
+
+    #temperature{
+      
+    }
+
+    
+
+  </style>
+
+  </head>
+  <body onload="getLocation()">
+
+
+  
+
+
+    <div class="jumbotron" >
+  <h1 class="display-4">Here is Your Weather Report</h1>
+  
+    
+
+    <p><div id="info"></div></p>
+
+   <p> <span id= 'temperature'></span><span id="unit"></span></p>
+
+    <img src="" id="myimage"><br>
+
+    <div id="icon"></div>
+
+  
+    <button class="btn btn-primary btn-lg" onclick="convert()" >Convert to <span id="button-unit">Fahrenheit</span></button>
+
+  
+</div>
+
+
+
+    
+
+
+    <script type="text/javascript">
+      var temperature_in_c;
+      
+      function getLocation(){
+
+        if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(showPosition);
+
+        }
+        else {
+          $('#location').html("Your browser doesn't support geolocation Service!");
+        }
+
+      }
+
+      function showPosition(position){
+       
+
+        var info = new XMLHttpRequest();
+        info.open('GET','https://fcc-weather-api.glitch.me/api/current?lat='+position.coords.latitude+'&lon='+position.coords.longitude);
+        info.onload = function(){
+          var report_object = JSON.parse(info.responseText);
+           
+          $('#info').html("City: "+report_object.name+", "+report_object.sys.country);
+          $('#temperature').html("Temperature: "+report_object.main.temp+"&#176 ");
+          temperature_in_c = report_object.main.temp;
+         $('#unit').html("C");
+          $('#myimage').attr('src',report_object.weather[0].icon);
+          
+
+
+
+         };
+         info.send();
+      };
+
+     function convert(){
+      var temp_unit = $("#unit").html();
+      var current_temp ;
+      if(temp_unit == "C"){
+        current_temp = temperature_in_c*1.8+32;
+        $('#temperature').html("Temperature: "+current_temp+"&#176");
+        $('#unit').html("F");
+        $('#button-unit').html("Celcius");
+      }
+      else if(temp_unit == "F"){
+        $('#temperature').html("Temperature: "+temperature_in_c+"&#176 ");
+         $('#unit').html("C");
+         $('#button-unit').html("Fahrenheit");
+
+      }
+     }
+
+      
+
+
+
+
+
+    </script>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
